@@ -12,7 +12,7 @@ Motor::Motor(int pin)
 	this->AttachedPin = _pin;
 	this->CurrentThrottle = 0;
 	this->MaximumThrottle = 254;
-	this->MinimumThrottle = 110;
+	this->MinimumThrottle = 0;
 	this->IsMotorRunning = false;
 
 	
@@ -25,7 +25,7 @@ Motor::~Motor()
 
 void Motor::Iniciar()
 {
-
+	_init_motor_spinning();
 }
 
 
@@ -63,18 +63,18 @@ void Motor::_throttle_motor(int valor)
 
 		analogWrite(this->AttachedPin, _new_throttle);
 		this->CurrentThrottle = _new_throttle;
-	}
+	 }
 }
 
 void Motor::_init_motor_spinning()
 {
 	bool _exit_loop = false;
 	int i = 0;
-	analogWrite(this->AttachedPin, this->MaximumThrottle);;
+//	analogWrite(this->AttachedPin, this->MaximumThrottle);;
 	delay(100);
 	do
 	{
-		for (i = this->MinimumThrottle; i <= 200; i++)
+		for (i = this->MinimumThrottle; i <= 10; i++)
 		{
 			analogWrite(this->AttachedPin, i);
 			this->CurrentThrottle = i;

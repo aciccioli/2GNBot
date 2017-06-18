@@ -14,13 +14,13 @@
     <None Include="Motor_Driver_1.ino" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Visual Micro\.Motor_Driver_1.vsarduino.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Motor.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Gyro.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="__vm\.Motor_Driver_1.vsarduino.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

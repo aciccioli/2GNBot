@@ -2,14 +2,14 @@
 #include "Gyro.h"
 
 
-Motor _motor_1(9);  // Y -
-Motor _motor_2(10); // X -
-Motor _motor_3(3);  // X +
-Motor _motor_4(11); // Y +
+Motor _motor_1(3);  // Y -
+Motor _motor_2(5); // X -
+Motor _motor_3(6);  // X +
+Motor _motor_4(9); // Y +
 
 Gyro _gyro;
 
-int acelera = 0;
+int acelera = 4;
 
 void setup() 
 {
@@ -21,9 +21,6 @@ void setup()
 
 	Serial.begin(115200);
 
-	Serial.print(_gyro.GetXAngle);
-	Serial.print(",");
-	Serial.println(_gyro.GetYAngle);
 
 
 }
@@ -34,11 +31,6 @@ void loop()
 	  /* Calcula el porcentaje de aceleracion para el motor a partir del joystick
 	    map(analogRead(4), 0, 640, -10, 10)
 	  */
-	  //if (Serial.available())
-	  //{
-		 // acelera = Serial.parseInt();
-	
-	  //}
 
 	  _motor_1.Acelera(acelera);
 	  _motor_3.Acelera(acelera);
@@ -46,7 +38,14 @@ void loop()
 	  _motor_4.Acelera(acelera);
 
 
-	  Estabilizar(_gyro.GetXAngle, _gyro.GetYAngle);
+	  //Estabilizar(_gyro.GetXAngle, _gyro.GetYAngle);
+
+	  Serial.println();
+	  Serial.print("X:"); Serial.print(_gyro.GetXAngle); Serial.print(", Y:");	Serial.print(_gyro.GetYAngle);
+	  Serial.print(" | Motor X- :"); Serial.print(_motor_2.CurrentThrottle);
+	  Serial.print(" | Motor X+ :"); Serial.print(_motor_3.CurrentThrottle);
+	  Serial.print(" | Motor Y- :"); Serial.print(_motor_1.CurrentThrottle);
+	  Serial.print(" | Motor Y+ :"); Serial.println(_motor_4.CurrentThrottle);
 
   }
 
@@ -68,11 +67,11 @@ void Estabilizar(int _GyroX, int _GyroY)
 		ay = 1 - (_GyroX / 100);
 
 		/* Verifico velocidad actual en el motor X - */
-		if ((_motor_2.CurrentThrottle == _motor_2.MaximumThrottle)) 
+		if ((_motor_2.CurrentThrottle == _motor_2.MaximumThrottle))
 		{
 			// Motor X - esta a maxima velocidad
 			// descacelero motor X+ para compensar
-			
+
 			_motor_3.Acelera(_GyroX);
 		}
 		else
@@ -139,10 +138,4 @@ void Estabilizar(int _GyroX, int _GyroY)
 			_motor_4.Acelera(_GyroY);
 		}
 	}
-
-	Serial.print("X:"); Serial.print(_GyroX); Serial.print(", Y:");	Serial.print(_GyroY); 
-	Serial.print(" | Motor X- :"); Serial.print(_motor_2.CurrentThrottle);
-	Serial.print(" | Motor X+ :"); Serial.print(_motor_3.CurrentThrottle);
-	Serial.print(" | Motor Y- :"); Serial.print(_motor_1.CurrentThrottle);
-	Serial.print(" | Motor Y+ :"); Serial.println(_motor_4.CurrentThrottle);
 }
